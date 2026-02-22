@@ -1,3 +1,41 @@
+/* CSS VARIABLES */
+:root {
+    /* Backgrounds */
+    --bg-deep: #000000;
+    --bg-dark: #1a1a1a;
+    --bg-mid: #2d2d2d;
+    --bg-card: #1e1e1e;
+    --bg-card-alt: #252520;
+
+    /* Sidebar */
+    --bg-sidebar: #3a3d28;
+    --bg-sidebar-accent: #4a4e30;
+
+    /* Borders & dividers */
+    --border-subtle: #3a3a3a;
+    --border-accent: #5c5e3a;
+
+    /* Text */
+    --text-light: #e8e6df;
+    --text-muted: #8a8880;
+    --text-dim: #5a5855;
+    --text-dark: #e8e6df;
+
+    /* Accent */
+    --accent-gold: #c8a84b;
+    --accent-red: #8b2020;
+    --accent-star: #c8a84b;
+
+    /* Poster placeholder */
+    --poster-placeholder-bg: #2a2a2a;
+
+    /* Layout — these were missing, causing page/sidebar/height to be undefined */
+    --page-width: 1200px;
+    --content-height: 800px;
+    --sidebar-width: 400px;
+    --footer-height: 36px;
+}
+
 *,
 *::before,
 *::after {
@@ -8,87 +46,72 @@
 
 body {
     font-family: "Verdana", Tahoma, sans-serif;
-    font-size: 8pt;
-    background: ivory;
-
-    color: var(--text-dark);
+    font-size: 9pt;
+    background: linear-gradient(210deg, #2d2d2d, #000000);
+    color: var(--text-light);
     min-height: 100vh;
-
 }
 
-/*
-#banner, #sidebar IDs because they are unique elements on the page with one use
-.review-box, .star-rating, .critic-info classes because they are used multiple times for styling similar elements
-*/
-
-/* 
- */
 /* banner */
 #banner {
-    background-color: #1a1a1a;
-    background-image: url('../assets/banner.png');
-    background-size: cover;
+    background-color: var(--bg-dark);
+    background: url('../assets/banner.png') repeat-x center;
     width: 100%;
-    height: 10vh;
+    height: clamp(60px, 12vh, 120px);
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-#banner h1 {
-    color: white;
-    font-size: 28pt;
-    font-weight: bold;
-    text-align: center;
-}
-
 /* PAGE WRAPPER */
 #page-wrapper {
-    max-width: 800px;
-    max-height: 800px;
+    width: var(--page-width);
+    max-width: 100%;
     margin: 0 auto;
 }
 
-
-
-/* flex row*/
+/* MAIN CONTENT */
 #main-content {
     display: flex;
-    gap: 0px;
-    align-items: flex-start;
-    width: 800px;
+    flex-direction: row;
+    align-items: stretch;
+    width: var(--page-width);
+    max-width: 100%;
+    height: var(--content-height);
+    overflow: hidden;
 }
 
 /* LEFT COLUMN */
 #left-column {
-    flex: 0 0 550px;
-    width: 550px;
+    flex: 1 1 0;
+    width: 240px;
+    height: var(--content-height);
+    overflow-y: auto;
     display: flex;
     flex-direction: column;
     gap: 12px;
-    background: #f5f0e8;
-    padding: 15px;
+    background: var(--bg-card);
+    padding: 14px 12px;
+    border-right: 1px solid var(--border-subtle);
 }
 
-
-
+/* RATING TOMATO IMAGE*/
 #rating-image-container {
     background-image: url('../assets/rottenbig.png');
     background-repeat: no-repeat;
     background-size: contain;
-    /* or 'cover' or specific dimensions */
     background-position: center;
-    width: 120px;
-    /* Set specific width */
-    height: 60px;
-    /* Set specific height */
+    width: 100%;
+    height: 55px;
+    flex-shrink: 0;
     display: block;
 }
 
+/* POSTER GRID */
 .poster-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
 }
 
 .poster-item {
@@ -97,54 +120,59 @@ body {
 
 .poster-item img {
     width: 100%;
-    height: 75px;
+    height: auto;
     object-fit: cover;
-    /* This ensures images fill the space nicely without distortion */
-    border: 1px solid #bbb;
+    border: 1px solid var(--border-subtle);
     border-radius: 2px;
     background-color: var(--poster-placeholder-bg);
-    /* Shows while image loads */
     display: block;
+    transition: border-color 0.2s ease, opacity 0.2s ease;
 }
 
 .poster-item p {
-    font-size: 6pt;
+    font-size: 6.5pt;
     color: var(--text-muted);
     margin-top: 3px;
     line-height: 1.3;
 }
 
-/* Optional: Add a hover effect */
 .poster-item img:hover {
-    border-color: #981818;
-    opacity: 0.9;
-    transition: all 0.2s ease;
+    border-color: var(--accent-red);
+    opacity: 0.85;
 }
 
-/* REVIEW SECTION */
+/* REVIEW GRID*/
 #review-grid {
+    flex: 1 1 0;
+    height: var(--content-height);
+    overflow-y: auto;
     background-image: url('../assets/background.png');
-    width: 100%;
+    background-size: cover;
     display: grid;
     grid-template-columns: 1fr 1fr;
+    grid-template-rows: repeat(3, 1fr);
     gap: 8px;
+    padding: 10px;
+    align-content: stretch;
 }
 
 .review-box {
-
-    background-color: rgb(249, 244, 244);
-    border: 1px solid #e0d89a;
+    background-color: var(--bg-card-alt);
+    border: 1px solid var(--border-accent);
     border-radius: 5px;
-    padding: 10px;
-    margin-bottom: 0px;
+    padding: 10px 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .review-quote {
     font-style: italic;
     font-family: 'Courier New', Courier, monospace;
-    font-size: 9pt;
-    color: var(--text-dark);
-    margin-bottom: 10px;
+    font-size: 8.5pt;
+    color: var(--text-light);
+    margin-bottom: 8px;
+    flex: 1;
 }
 
 .review-meta {
@@ -153,9 +181,8 @@ body {
     align-items: flex-end;
 }
 
-
 .critic-info {
-    font-size: 6.5pt;
+    font-size: 7pt;
     color: var(--text-muted);
     font-style: italic;
     line-height: 1.4;
@@ -166,7 +193,7 @@ body {
 }
 
 .stars {
-    color: var(--star-color);
+    color: var(--accent-star);
     font-size: 9pt;
     letter-spacing: 1px;
     display: block;
@@ -178,39 +205,40 @@ body {
     font-style: italic;
 }
 
-
-
-
-/* SIDEBAR  */
+/*    SIDEBAR*/
 #sidebar {
-    flex: 0 0 250px;
-    width: 250px;
-    background-color: #8fa144;
-    padding: 10px;
-    font-size: 8pt;
+    flex: 1 1 0;
+    width: var(--sidebar-width);
+    height: var(--content-height);
+    overflow-y: auto;
+    background-color: var(--bg-sidebar);
+    padding: 14px 16px;
+    font-size: 9pt;
     font-family: "Verdana", Tahoma, sans-serif;
+    border-left: 1px solid var(--border-accent);
+    display: flex;
+    flex-direction: column;
+    gap: 0;
 }
 
-
-
 .sidebar-section {
-    margin-bottom: 14px;
+    margin-bottom: 16px;
 }
 
 .sidebar-section h2 {
     font-family: 'Oswald', sans-serif;
     font-size: 11pt;
     font-weight: 700;
-    color: var(--sidebar-text);
+    color: var(--accent-gold);
     margin-bottom: 6px;
-    border-bottom: 2px solid rgba(0, 0, 0, 0.25);
+    border-bottom: 2px solid var(--border-accent);
     padding-bottom: 3px;
 }
 
 .sidebar-section p,
 .sidebar-section li {
-    line-height: 1.6;
-    color: var(--sidebar-text);
+    line-height: 1.7;
+    color: var(--text-light);
 }
 
 .sidebar-section ul {
@@ -219,77 +247,93 @@ body {
 
 .sidebar-section li strong {
     font-weight: 600;
+    color: var(--text-light);
 }
 
 .cast-member {
-    margin-bottom: 3px;
+    margin-bottom: 5px;
 }
 
 .cast-role {
-    color: #444;
+    color: var(--text-muted);
     font-style: italic;
+    font-size: 7.5pt;
 }
 
+/*   SOCIAL ICONS*/
 .social-icons {
     display: flex;
-    gap: 8px;
+    gap: 10px;
     margin: 8px 0 10px;
-    font-size: 16pt;
 }
 
 .social-icon {
-    width: 26px;
-    height: 26px;
-    background: var(--text-dark);
+    width: 30px;
+    height: 30px;
+    background: var(--bg-mid);
+    border: 1px solid var(--border-subtle);
     border-radius: 50%;
     display: flex;
-
     align-items: center;
-
     justify-content: center;
-
     cursor: pointer;
+    text-decoration: none;
+    transition: background 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
+}
+
+.social-icon:hover {
+    background: var(--bg-sidebar-accent);
+    border-color: var(--accent-gold);
+    transform: translateY(-2px);
 }
 
 .social-icon svg {
-    width: 14px;
-    height: 14px;
-    fill: #fff;
+    width: 15px;
+    height: 15px;
+    fill: var(--text-light);
 }
 
+.social-icon:hover svg {
+    fill: var(--accent-gold);
+}
+
+/*   TRAILER BUTTON*/
 .btn-trailer {
     display: inline-block;
-    background: #333333;
-    color: #fafafa;
+    background: var(--bg-mid);
+    color: var(--text-light);
     font-family: 'Oswald', sans-serif;
-    font-size: 9pt;
+    font-size: 10pt;
     font-weight: 600;
-    padding: 6px 14px;
+    padding: 8px 18px;
     border-radius: 3px;
     cursor: pointer;
-    border: none;
+    border: 1px solid var(--border-accent);
     letter-spacing: 0.5px;
+    transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+    margin-top: auto;
 }
 
 .btn-trailer:hover {
-    background: #79795c;    
+    background: var(--bg-sidebar-accent);
+    border-color: var(--accent-gold);
+    color: var(--accent-gold);
 }
 
-
-
-/* FOOTER */
+/*  FOOTER */
 #total-review-footer {
-    background-color: #17181a;
-    color: #e0e0e0;
+    background-color: var(--bg-dark);
+    color: var(--text-muted);
     font-size: 8pt;
     font-family: "Verdana", Tahoma, sans-serif;
-    padding: 10px 20px;
+    padding: 8px 24px;
     text-align: center;
     width: 100%;
     letter-spacing: 0.5px;
-    border-top: 2px solid #333;
+    border-top: 1px solid var(--border-subtle);
     position: fixed;
     bottom: 0;
     left: 0;
     z-index: 100;
+    height: var(--footer-height);
 }
